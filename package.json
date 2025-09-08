@@ -1,0 +1,21 @@
+{
+  "name": "begone-tags",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "build:release": "npm run build && mkdir -p build && zip -r build/begone-tags.zip manifest.xml dist public",
+    "test": "vitest run",
+    "lint": "prettier --check \"src/**/*.ts\" \"tests/**/*.ts\" \"public/**/*.html\""
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.1",
+    "@types/office-js": "^1.0.533",
+    "prettier": "^3.2.5",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0"
+  },
+  "dependencies": {
+    "office-js": "^0.1.0"
+  }
+}
