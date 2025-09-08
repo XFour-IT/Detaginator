@@ -3,24 +3,71 @@
  * See LICENSE in the project root for license information.
  */
 
-/* global Office Excel console */
+/* global Excel console Office */
 
-/**
- * Set range color to selected range in excel when the add-in command is executed.
- * @param event
- */
-export async function setRangeColorInExcel(event: Office.AddinCommands.Event) {
+function stripHtmlTags(text: string): string {
+  return text.replace(/<[^>]*>/g, "");
+}
+
+async function removeTagsFromRange(range: Excel.Range, context: Excel.RequestContext): Promise<void> {
+  range.load(["values", "isNullObject"]);
+  await context.sync();
+  if ((range as any).isNullObject) {
+    return;
+  }
+
+  const values = range.values as any[][];
+  for (let r = 0; r < values.length; r++) {
+    for (let c = 0; c < values[r].length; c++) {
+      const cell = values[r][c];
+      if (typeof cell === "string") {
+        values[r][c] = stripHtmlTags(cell);
+      }
+    }
+  }
+  range.values = values;
+  await context.sync();
+}
+
+export async function removeAllTags(event: Office.AddinCommands.Event): Promise<void> {
+  try {
+    await Excel.run(async (context) => {
+      const sheets = context.workbook.worksheets;
+      sheets.load("items");
+      await context.sync();
+
+      for (const sheet of sheets.items) {
+        const used = sheet.getUsedRangeOrNullObject();
+        await removeTagsFromRange(used, context);
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  }
+  event.completed();
+}
+
+export async function removeTagsFromWorksheet(event: Office.AddinCommands.Event): Promise<void> {
+  try {
+    await Excel.run(async (context) => {
+      const sheet = context.workbook.worksheets.getActiveWorksheet();
+      const used = sheet.getUsedRangeOrNullObject();
+      await removeTagsFromRange(used, context);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+  event.completed();
+}
+
+export async function removeTagsFromSelection(event: Office.AddinCommands.Event): Promise<void> {
   try {
     await Excel.run(async (context) => {
       const range = context.workbook.getSelectedRange();
-      range.format.fill.color = "yellow";
-      await context.sync();
+      await removeTagsFromRange(range, context);
     });
   } catch (error) {
-    // Note: In a production add-in, notify the user through your add-in's UI.
     console.error(error);
   }
-
-  // Be sure to indicate when the add-in command function is complete
   event.completed();
 }

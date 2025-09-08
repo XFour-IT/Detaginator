@@ -87,9 +87,19 @@
                     "lifetime": "short",
                     "actions": [
                         {
-                            "id": "action",
+                            "id": "removeAllTags",
                             "type": "executeFunction",
-                            "displayName": "action"
+                            "displayName": "Remove all tags"
+                        },
+                        {
+                            "id": "removeTagsFromWorksheet",
+                            "type": "executeFunction",
+                            "displayName": "Remove tags from worksheet"
+                        },
+                        {
+                            "id": "removeTagsFromSelection",
+                            "type": "executeFunction",
+                            "displayName": "Remove tags from selected range"
                         }
                     ]
                 }
@@ -104,8 +114,8 @@
                             "builtInTabId": "TabHome",
                             "groups": [
                                 {
-                                    "id": "msgReadGroup",
-                                    "label": "Contoso Add-in",
+                                    "id": "begoneTagsGroup",
+                                    "label": "Begone Tags",
                                     "icons": [
                                         {
                                             "size": 16,
@@ -122,33 +132,34 @@
                                     ],
                                     "controls": [
                                         {
-                                            "id": "msgReadOpenPaneButton",
-                                            "type": "button",
-                                            "label": "Show Taskpane",
-                                            "icons": [
+                                            "id": "removeTagsMenu",
+                                            "type": "menu",
+                                            "label": "Remove tags",
+                                            "items": [
                                                 {
-                                                    "size": 16,
-                                                    "url": "https://localhost:3000/assets/icon-16.png"
+                                                    "id": "removeAllTagsButton",
+                                                    "type": "button",
+                                                    "label": "Remove all tags",
+                                                    "actionId": "removeAllTags"
                                                 },
                                                 {
-                                                    "size": 32,
-                                                    "url": "https://localhost:3000/assets/icon-32.png"
+                                                    "id": "removeWorksheetTagsButton",
+                                                    "type": "button",
+                                                    "label": "Remove tags from worksheet",
+                                                    "actionId": "removeTagsFromWorksheet"
                                                 },
                                                 {
-                                                    "size": 80,
-                                                    "url": "https://localhost:3000/assets/icon-80.png"
+                                                    "id": "removeSelectionTagsButton",
+                                                    "type": "button",
+                                                    "label": "Remove tags from selected range",
+                                                    "actionId": "removeTagsFromSelection"
                                                 }
-                                            ],
-                                            "supertip": {
-                                                "title": "Show Taskpane",
-                                                "description": "Opens a pane displaying all available properties."
-                                            },
-                                            "actionId": "TaskPaneRuntimeShow"
+                                            ]
                                         },
                                         {
-                                            "id": "ActionButton",
+                                            "id": "advancedOptionsButton",
                                             "type": "button",
-                                            "label": "Perform an action",
+                                            "label": "Advanced options",
                                             "icons": [
                                                 {
                                                     "size": 16,
@@ -163,11 +174,7 @@
                                                     "url": "https://localhost:3000/assets/icon-80.png"
                                                 }
                                             ],
-                                            "supertip": {
-                                                "title": "Perform an action",
-                                                "description": "Perform an action when clicked."
-                                            },
-                                            "actionId": "action"
+                                            "actionId": "TaskPaneRuntimeShow"
                                         }
                                     ]
                                 }
