@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Begone-Tags</title>
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <script type="module" src="../dist/taskpane.js"></script>
+  </head>
+  <body>
+    <button id="clean">Clean Selection</button>
+    <script type="module">
+      import { cleanSelection } from "../dist/taskpane.js";
+      document.getElementById("clean")!.addEventListener("click", cleanSelection);
+    </script>
+  </body>
+</html>

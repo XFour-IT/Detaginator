@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es2019",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["es2019", "dom"],
+    "strict": true,
+    "outDir": "dist",
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "types": ["node", "office-js"]
+  },
+  "include": ["src/**/*.ts", "tests/**/*.ts"]
+}
