@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "tsc",
+    "build:release": "npm run build && mkdir -p build && zip -r build/begone-tags.zip manifest.xml dist public",
     "test": "vitest run",
     "lint": "prettier --check \"src/**/*.ts\" \"tests/**/*.ts\" \"public/**/*.html\""
   },
