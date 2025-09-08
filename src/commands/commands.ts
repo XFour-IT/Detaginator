@@ -1,8 +1,9 @@
-import { setRangeColorInExcel } from "./excel";
+import { removeAllTags, removeTagsFromWorksheet, removeTagsFromSelection } from "./excel";
 
 /* global Office */
 
-// Register the add-in commands with the Office host application.
-Office.onReady(async () => {
-  Office.actions.associate("action", setRangeColorInExcel);
+Office.onReady(() => {
+  Office.actions.associate("removeAllTags", removeAllTags);
+  Office.actions.associate("removeTagsFromWorksheet", removeTagsFromWorksheet);
+  Office.actions.associate("removeTagsFromSelection", removeTagsFromSelection);
 });
