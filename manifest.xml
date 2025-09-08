@@ -2,6 +2,7 @@
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
            xsi:type="TaskPaneApp">
   <Id>12345678-1234-1234-1234-123456789abc</Id>
   <Version>0.1.0</Version>
@@ -16,4 +17,65 @@
     <SourceLocation DefaultValue="https://localhost:3000/public/taskpane.html" />
   </DefaultSettings>
   <Permissions>ReadWriteDocument</Permissions>
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host xsi:type="Workbook">
+        <Runtimes>
+          <Runtime resid="Taskpane.Url" lifetime="long" />
+          <Runtime resid="Commands.Url" lifetime="long" />
+        </Runtimes>
+        <ExtensionPoint xsi:type="PrimaryCommandSurface">
+          <OfficeTab id="TabHome">
+            <Group id="BegoneTagsGroup">
+              <Label resid="BegoneTagsGroup.Label" />
+              <Control xsi:type="Menu" id="RemoveTagsMenu">
+                <Label resid="RemoveTagsMenu.Label" />
+                <Items>
+                  <Item id="RemoveAllTags">
+                    <Label resid="RemoveAllTags.Label" />
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>cleanWorkbook</FunctionName>
+                    </Action>
+                  </Item>
+                  <Item id="RemoveWorksheetTags">
+                    <Label resid="RemoveWorksheetTags.Label" />
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>cleanWorksheet</FunctionName>
+                    </Action>
+                  </Item>
+                  <Item id="RemoveSelectionTags">
+                    <Label resid="RemoveSelectionTags.Label" />
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>cleanSelection</FunctionName>
+                    </Action>
+                  </Item>
+                </Items>
+              </Control>
+              <Control xsi:type="Button" id="AdvancedOptionsButton">
+                <Label resid="AdvancedOptionsButton.Label" />
+                <Action xsi:type="ShowTaskpane">
+                  <TaskpaneId>Taskpane.Read</TaskpaneId>
+                </Action>
+              </Control>
+            </Group>
+          </OfficeTab>
+        </ExtensionPoint>
+        <Taskpane id="Taskpane.Read" resid="Taskpane.Url" />
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Urls>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/public/taskpane.html" />
+        <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/public/commands.html" />
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="BegoneTagsGroup.Label" DefaultValue="Begone Tags" />
+        <bt:String id="RemoveTagsMenu.Label" DefaultValue="Remove tags" />
+        <bt:String id="RemoveAllTags.Label" DefaultValue="Remove all tags" />
+        <bt:String id="RemoveWorksheetTags.Label" DefaultValue="Remove tags from worksheet" />
+        <bt:String id="RemoveSelectionTags.Label" DefaultValue="Remove tags from selected range" />
+        <bt:String id="AdvancedOptionsButton.Label" DefaultValue="Advanced options" />
+      </bt:ShortStrings>
+    </Resources>
+  </VersionOverrides>
 </OfficeApp>
