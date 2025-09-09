@@ -1,129 +1,143 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
-  <Id>9e59f1a5-e892-4b9e-a089-656c27a3b590</Id>
-  <Version>1.0.0.0</Version>
-  <ProviderName>Contoso</ProviderName>
-  <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="Tag Remover"/>
-  <Description DefaultValue="A template to get started."/>
-  <IconUrl DefaultValue="https://localhost:3000/assets/icon-32.png"/>
-  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
-  <SupportUrl DefaultValue="https://www.contoso.com/help"/>
-  <AppDomains>
-    <AppDomain>https://www.contoso.com</AppDomain>
-  </AppDomains>
-  <Hosts>
-    <Host Name="Workbook"/>
-  </Hosts>
-  <DefaultSettings>
-    <SourceLocation DefaultValue="https://localhost:3000/taskpane.html"/>
-  </DefaultSettings>
-  <Permissions>ReadWriteDocument</Permissions>
-  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+    xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+    xsi:type="TaskPaneApp">
+    <Id>775091b3-e24a-4cf4-a65b-26976fda4f3c</Id>
+    <Version>1.0.0.0</Version>
+    <ProviderName>XFour IT Limited</ProviderName>
+    <DefaultLocale>en-GB</DefaultLocale>
+    <DisplayName DefaultValue="Tag Remover" />
+    <Description DefaultValue="A simple hello world Office Add-in." />
+    <IconUrl DefaultValue="https://localhost:3000/assets/icon-32.png" />
+    <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-64.png" />
+    <SupportUrl
+        DefaultValue="https://learn.microsoft.com/office/dev/add-ins/overview/office-add-in-code-samples" />
+    <AppDomains>
+        <AppDomain>https://localhost:3000</AppDomain>
+    </AppDomains>
     <Hosts>
-      <Host xsi:type="Workbook">
-        <DesktopFormFactor>
-          <GetStarted>
-            <Title resid="GetStarted.Title"/>
-            <Description resid="GetStarted.Description"/>
-            <LearnMoreUrl resid="GetStarted.LearnMoreUrl"/>
-          </GetStarted>
-          <FunctionFile resid="Commands.Url"/>
-          <ExtensionPoint xsi:type="PrimaryCommandSurface">
-            <OfficeTab id="TabHome">
-              <Group id="RemoveTagsGroup">
-                <Label resid="RemoveTagsGroup.Label"/>
-                <Icon>
-                  <bt:Image size="16" resid="Icon.16x16"/>
-                  <bt:Image size="32" resid="Icon.32x32"/>
-                  <bt:Image size="80" resid="Icon.80x80"/>
-                </Icon>
-                <Control xsi:type="Menu" id="RemoveTagsMenu">
-                  <Label resid="RemoveTagsMenu.Label"/>
-                  <Supertip>
-                    <Title resid="RemoveTagsMenu.Label"/>
-                    <Description resid="RemoveTagsMenu.Tooltip"/>
-                  </Supertip>
-                  <Items>
-                    <Item id="RemoveTagsMenu.RemoveAll" xsi:type="Button">
-                      <Label resid="RemoveTags.RemoveAll.Label"/>
-                      <Supertip>
-                        <Title resid="RemoveTags.RemoveAll.Label"/>
-                        <Description resid="RemoveTags.RemoveAll.Tooltip"/>
-                      </Supertip>
-                      <Icon>
-                        <bt:Image size="16" resid="Icon.16x16"/>
-                        <bt:Image size="32" resid="Icon.32x32"/>
-                        <bt:Image size="80" resid="Icon.80x80"/>
-                      </Icon>
-                      <Action xsi:type="ExecuteFunction">
-                        <FunctionName>removeTagsFromDocument</FunctionName>
-                      </Action>
-                    </Item>
-                    <Item id="RemoveTagsMenu.RemoveWorksheet" xsi:type="Button">
-                      <Label resid="RemoveTags.RemoveWorksheet.Label"/>
-                      <Supertip>
-                        <Title resid="RemoveTags.RemoveWorksheet.Label"/>
-                        <Description resid="RemoveTags.RemoveWorksheet.Tooltip"/>
-                      </Supertip>
-                      <Icon>
-                        <bt:Image size="16" resid="Icon.16x16"/>
-                        <bt:Image size="32" resid="Icon.32x32"/>
-                        <bt:Image size="80" resid="Icon.80x80"/>
-                      </Icon>
-                      <Action xsi:type="ExecuteFunction">
-                        <FunctionName>removeTagsFromWorksheet</FunctionName>
-                      </Action>
-                    </Item>
-                    <Item id="RemoveTagsMenu.RemoveSelection" xsi:type="Button">
-                      <Label resid="RemoveTags.RemoveSelection.Label"/>
-                      <Supertip>
-                        <Title resid="RemoveTags.RemoveSelection.Label"/>
-                        <Description resid="RemoveTags.RemoveSelection.Tooltip"/>
-                      </Supertip>
-                      <Icon>
-                        <bt:Image size="16" resid="Icon.16x16"/>
-                        <bt:Image size="32" resid="Icon.32x32"/>
-                        <bt:Image size="80" resid="Icon.80x80"/>
-                      </Icon>
-                      <Action xsi:type="ExecuteFunction">
-                        <FunctionName>removeTagsFromSelection</FunctionName>
-                      </Action>
-                    </Item>
-                  </Items>
-                </Control>
-              </Group>
-            </OfficeTab>
-          </ExtensionPoint>
-        </DesktopFormFactor>
-      </Host>
+        <Host Name="Workbook" />
     </Hosts>
-    <Resources>
-      <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3000/assets/icon-16.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3000/assets/icon-32.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3000/assets/icon-80.png"/>
-      </bt:Images>
-      <bt:Urls>
-        <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
-        <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
-      </bt:Urls>
-      <bt:ShortStrings>
-        <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!"/>
-        <bt:String id="RemoveTagsGroup.Label" DefaultValue="Tag Tools"/>
-        <bt:String id="RemoveTagsMenu.Label" DefaultValue="Remove tags"/>
-        <bt:String id="RemoveTags.RemoveAll.Label" DefaultValue="Remove all tags"/>
-        <bt:String id="RemoveTags.RemoveWorksheet.Label" DefaultValue="Remove tags from worksheet"/>
-        <bt:String id="RemoveTags.RemoveSelection.Label" DefaultValue="Remove tags from selected range"/>
-      </bt:ShortStrings>
-      <bt:LongStrings>
-        <bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded successfully."/>
-        <bt:String id="RemoveTagsMenu.Tooltip" DefaultValue="Remove HTML tags from your workbook"/>
-        <bt:String id="RemoveTags.RemoveAll.Tooltip" DefaultValue="Remove HTML tags from the entire workbook"/>
-        <bt:String id="RemoveTags.RemoveWorksheet.Tooltip" DefaultValue="Remove HTML tags from the current worksheet"/>
-        <bt:String id="RemoveTags.RemoveSelection.Tooltip" DefaultValue="Remove HTML tags from the selected range"/>
-      </bt:LongStrings>
-    </Resources>
-  </VersionOverrides>
+    <DefaultSettings>
+        <SourceLocation DefaultValue="https://localhost:3000/taskpane.html" />
+    </DefaultSettings>
+    <Permissions>ReadWriteDocument</Permissions>
+    <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+        xsi:type="VersionOverridesV1_0">
+        <Hosts>
+            <Host xsi:type="Workbook">
+                <DesktopFormFactor>
+                    <GetStarted>
+                        <Title resid="GetStarted.Title" />
+                        <Description resid="GetStarted.Description" />
+                        <LearnMoreUrl resid="GetStarted.LearnMoreUrl" />
+                    </GetStarted>
+                    <FunctionFile resid="Commands.Url" />
+                    <ExtensionPoint xsi:type="PrimaryCommandSurface">
+                        <OfficeTab id="TabHome">
+                            <Group id="RemoveTagsGroup">
+                                <Label resid="RemoveTagsGroup.Label" />
+                                <Icon>
+                                    <bt:Image size="16" resid="Icon.16x16" />
+                                    <bt:Image size="32" resid="Icon.32x32" />
+                                    <bt:Image size="80" resid="Icon.80x80" />
+                                </Icon>
+                                <Control xsi:type="Menu" id="RemoveTagsMenu">
+                                    <Label resid="RemoveTagsMenu.Label" />
+                                    <Supertip>
+                                        <Title resid="RemoveTagsMenu.Label" />
+                                        <Description resid="RemoveTagsMenu.Tooltip" />
+                                    </Supertip>
+                                    <Icon>
+                                        <bt:Image size="16" resid="Icon.16x16" />
+                                        <bt:Image size="32" resid="Icon.32x32" />
+                                        <bt:Image size="80" resid="Icon.80x80" />
+                                    </Icon>
+                                    <Items>
+                                        <Item id="RemoveTagsMenu.RemoveAll">
+                                            <Label resid="RemoveTags.RemoveAll.Label" />
+                                            <Supertip>
+                                                <Title resid="RemoveTags.RemoveAll.Label" />
+                                                <Description resid="RemoveTags.RemoveAll.Tooltip" />
+                                            </Supertip>
+                                            <Icon>
+                                                <bt:Image size="16" resid="Icon.16x16" />
+                                                <bt:Image size="32" resid="Icon.32x32" />
+                                                <bt:Image size="80" resid="Icon.80x80" />
+                                            </Icon>
+                                            <Action xsi:type="ExecuteFunction">
+                                                <FunctionName>removeTagsFromWorkbook</FunctionName>
+                                            </Action>
+                                        </Item>
+                                        <Item id="RemoveTagsMenu.FromWorksheet">
+                                            <Label resid="RemoveTags.FromWorksheet.Label" />
+                                            <Supertip>
+                                                <Title resid="RemoveTags.FromWorksheet.Label" />
+                                                <Description
+                                                    resid="RemoveTags.FromWorksheet.Tooltip" />
+                                            </Supertip>
+                                            <Icon>
+                                                <bt:Image size="16" resid="Icon.16x16" />
+                                                <bt:Image size="32" resid="Icon.32x32" />
+                                                <bt:Image size="80" resid="Icon.80x80" />
+                                            </Icon>
+                                            <Action xsi:type="ExecuteFunction">
+                                                <FunctionName>removeTagsFromWorksheet</FunctionName>
+                                            </Action>
+                                        </Item>
+                                        <Item id="RemoveTagsMenu.FromSelection">
+                                            <Label resid="RemoveTags.FromSelection.Label" />
+                                            <Supertip>
+                                                <Title resid="RemoveTags.FromSelection.Label" />
+                                                <Description
+                                                    resid="RemoveTags.FromSelection.Tooltip" />
+                                            </Supertip>
+                                            <Icon>
+                                                <bt:Image size="16" resid="Icon.16x16" />
+                                                <bt:Image size="32" resid="Icon.32x32" />
+                                                <bt:Image size="80" resid="Icon.80x80" />
+                                            </Icon>
+                                            <Action xsi:type="ExecuteFunction">
+                                                <FunctionName>removeTagsFromSelection</FunctionName>
+                                            </Action>
+                                        </Item>
+                                    </Items>
+                                </Control>
+                            </Group>
+                        </OfficeTab>
+                    </ExtensionPoint>
+                </DesktopFormFactor>
+            </Host>
+        </Hosts>
+        <Resources>
+            <bt:Images>
+                <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3000/assets/icon-16.png" />
+                <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3000/assets/icon-32.png" />
+                <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3000/assets/icon-80.png" />
+            </bt:Images>
+            <bt:Urls>
+                <bt:Url id="GetStarted.LearnMoreUrl"
+                    DefaultValue="http://go.microsoft.com/fwlink/?LinkId=276812" />
+                <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html" />
+                <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html" />
+            </bt:Urls>
+            <bt:ShortStrings>
+                <bt:String id="GetStarted.Title" DefaultValue="Get started with Tag Remover" />
+                <bt:String id="RemoveTagsGroup.Label" DefaultValue="Tag Remover" />
+                <bt:String id="RemoveTagsMenu.Label" DefaultValue="Remove Tags" />
+                <bt:String id="RemoveTags.RemoveAll.Label" DefaultValue="Remove All Tags" />
+                <bt:String id="RemoveTags.FromWorksheet.Label" DefaultValue="...from Worksheet" />
+                <bt:String id="RemoveTags.FromSelection.Label" DefaultValue="...from Selection" />
+            </bt:ShortStrings>
+            <bt:LongStrings>
+                <bt:String id="GetStarted.Description" DefaultValue="Chose to remove tags from the whole workbook, the open worksheet or your selection." />
+                <bt:String id="RemoveTagsMenu.Tooltip" DefaultValue="Remove tags from the document" />
+                <bt:String id="RemoveTags.RemoveAll.Tooltip" DefaultValue="Remove all tags from the document" />
+                <bt:String id="RemoveTags.FromWorksheet.Tooltip" DefaultValue="Remove tags from the current worksheet" />
+                <bt:String id="RemoveTags.FromSelection.Tooltip" DefaultValue="Remove tags from the current selection" />
+            </bt:LongStrings>
+        </Resources>
+    </VersionOverrides>
 </OfficeApp>

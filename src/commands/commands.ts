@@ -11,7 +11,7 @@ Office.onReady(() => {
 
 /**
  * Remove HTML tags from the selected range.
- * @param event
+ * @param event - the event object provided by the Office runtime
  */
 async function removeTagsFromSelection(event: Office.AddinCommands.Event) {
   try {
@@ -28,12 +28,12 @@ async function removeTagsFromSelection(event: Office.AddinCommands.Event) {
 
 /**
  * Remove HTML tags from the active worksheet.
- * @param event
+ * @param event - the event object provided by the Office runtime
  */
 async function removeTagsFromWorksheet(event: Office.AddinCommands.Event) {
   try {
     await Excel.run(async (context) => {
-      const sheet = context.workbook.getActiveWorksheet();
+      const sheet = context.workbook.worksheets.getActiveWorksheet();
       const used = sheet.getUsedRangeOrNullObject();
       await context.sync();
       if (!used.isNullObject) {
@@ -49,9 +49,9 @@ async function removeTagsFromWorksheet(event: Office.AddinCommands.Event) {
 
 /**
  * Remove HTML tags from all worksheets in the workbook.
- * @param event
+ * @param event - the event object provided by the Office runtime
  */
-async function removeTagsFromDocument(event: Office.AddinCommands.Event) {
+async function removeTagsFromWorkbook(event: Office.AddinCommands.Event) {
   try {
     await Excel.run(async (context) => {
       const sheets = context.workbook.worksheets;
@@ -75,10 +75,47 @@ async function removeTagsFromDocument(event: Office.AddinCommands.Event) {
   }
 }
 
+/** Cleans all cells in a workbook by stripping HTML tags and keeping text within
+ * paragraph tags.
+ * 
+ * Calls the cleanSheet function for each sheet in the workbook.
+ * 
+ * @param workbook - the Excel workbook to clean
+ */
+function cleanWorkbook(workbook: Excel.Workbook) {
+  const sheets = workbook.worksheets;
+  sheets.load("items");
+  return sheets.context.sync().then(() => {
+    const promises: Promise<void>[] = [];
+    for (const sheet of sheets.items) {
+      promises.push(cleanSheet(sheet));
+    }
+    return Promise.all(promises).then(() => {});
+  });
+}
+
+/**
+ * Cleans all cells in a worksheet by stripping HTML tags and keeping text within
+ * paragraph tags.
+ * 
+ * Calls the cleanRange function for the used range of the sheet.
+ * 
+ * @param sheet - the Excel worksheet to clean
+ * @returns 
+ */
+function cleanSheet(sheet: Excel.Worksheet) {
+  const usedRange = sheet.getUsedRangeOrNullObject();
+  return usedRange.load("address").context.sync().then(() => {
+    if (!usedRange.isNullObject) {
+      return cleanRange(usedRange);
+    }
+  });
+}
+
 /**
  * Cleans all cells within a range by stripping HTML tags and keeping text within
  * paragraph tags.
- * @param range
+ * @param range - the Excel range to clean
  */
 async function cleanRange(range: Excel.Range) {
   range.load("values");
@@ -101,17 +138,18 @@ async function cleanRange(range: Excel.Range) {
 
 /**
  * Remove HTML tags from a string, keeping text inside <p> tags when present.
- * @param value
+ * @param value - the string to clean
  * @returns cleaned string
  */
 function stripHtml(value: string): string {
-  if (!/<[^>]+>/i.test(value)) {
+  const regex = /<p[^>]*>(.*?)<\/p>/gi;
+
+  if (!regex.test(value)) {
     return value;
   }
-  const paragraphRegex = /<p[^>]*>(.*?)<\/p>/gi;
   const paragraphs: string[] = [];
   let match: RegExpExecArray | null;
-  while ((match = paragraphRegex.exec(value)) !== null) {
+  while ((match = regex.exec(value)) !== null) {
     paragraphs.push(match[1]);
   }
   if (paragraphs.length > 0) {
@@ -125,4 +163,4 @@ function stripHtml(value: string): string {
 
 Office.actions.associate("removeTagsFromSelection", removeTagsFromSelection);
 Office.actions.associate("removeTagsFromWorksheet", removeTagsFromWorksheet);
-Office.actions.associate("removeTagsFromDocument", removeTagsFromDocument);
+Office.actions.associate("removeTagsFromWorkbook", removeTagsFromWorkbook);
