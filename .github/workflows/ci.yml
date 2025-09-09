@@ -30,13 +30,13 @@ jobs:
       - run: npm run build:release
       - name: Bump version and push tag
         id: tag
-        uses: mathieudutour/github-tag-action@v6
+        uses: mathieudutour/github-tag-action@v6.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           release_branches: main
           default_bump: patch
           tag_prefix: ''
-          initial_version: 0.1.0
+          # initial_version: 0.1.0
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
         with:
