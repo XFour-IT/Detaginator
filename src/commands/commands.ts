@@ -75,42 +75,37 @@ async function removeTagsFromWorkbook(event: Office.AddinCommands.Event) {
   }
 }
 
-/** Cleans all cells in a workbook by stripping HTML tags and keeping text within
- * paragraph tags.
- * 
- * Calls the cleanSheet function for each sheet in the workbook.
- * 
- * @param workbook - the Excel workbook to clean
- */
-function cleanWorkbook(workbook: Excel.Workbook) {
-  const sheets = workbook.worksheets;
-  sheets.load("items");
-  return sheets.context.sync().then(() => {
-    const promises: Promise<void>[] = [];
-    for (const sheet of sheets.items) {
-      promises.push(cleanSheet(sheet));
-    }
-    return Promise.all(promises).then(() => {});
-  });
-}
+// /** Cleans all cells in a workbook by stripping HTML tags and keeping text within
+//  * paragraph tags.
+//  * Calls the cleanSheet function for each sheet in the workbook.
+//  * @param workbook - the Excel workbook to clean
+//  */
+// function cleanWorkbook(workbook: Excel.Workbook) {
+//   const sheets = workbook.worksheets;
+//   sheets.load("items");
+//   return sheets.context.sync().then(() => {
+//     const promises: Promise<void>[] = [];
+//     for (const sheet of sheets.items) {
+//       promises.push(cleanSheet(sheet));
+//     }
+//     return Promise.all(promises).then(() => {});
+//   });
+// }
 
-/**
- * Cleans all cells in a worksheet by stripping HTML tags and keeping text within
- * paragraph tags.
- * 
- * Calls the cleanRange function for the used range of the sheet.
- * 
- * @param sheet - the Excel worksheet to clean
- * @returns 
- */
-function cleanSheet(sheet: Excel.Worksheet) {
-  const usedRange = sheet.getUsedRangeOrNullObject();
-  return usedRange.load("address").context.sync().then(() => {
-    if (!usedRange.isNullObject) {
-      return cleanRange(usedRange);
-    }
-  });
-}
+// /**
+//  * Cleans all cells in a worksheet by stripping HTML tags and keeping text within
+//  * paragraph tags.
+//  * Calls the cleanRange function for the used range of the sheet.
+//  * @param sheet - the Excel worksheet to clean
+//  */
+// function cleanSheet(sheet: Excel.Worksheet) {
+//   const usedRange = sheet.getUsedRangeOrNullObject();
+//   return usedRange.load("address").context.sync().then(() => {
+//     if (!usedRange.isNullObject) {
+//       return cleanRange(usedRange);
+//     }
+//   });
+// }
 
 /**
  * Cleans all cells within a range by stripping HTML tags and keeping text within
