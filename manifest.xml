@@ -31,28 +31,66 @@
           <FunctionFile resid="Commands.Url"/>
           <ExtensionPoint xsi:type="PrimaryCommandSurface">
             <OfficeTab id="TabHome">
-              <Group id="CommandsGroup">
-                <Label resid="CommandsGroup.Label"/>
+              <Group id="RemoveTagsGroup">
+                <Label resid="RemoveTagsGroup.Label"/>
                 <Icon>
                   <bt:Image size="16" resid="Icon.16x16"/>
                   <bt:Image size="32" resid="Icon.32x32"/>
                   <bt:Image size="80" resid="Icon.80x80"/>
                 </Icon>
-                <Control xsi:type="Button" id="TaskpaneButton">
-                  <Label resid="TaskpaneButton.Label"/>
+                <Control xsi:type="Menu" id="RemoveTagsMenu">
+                  <Label resid="RemoveTagsMenu.Label"/>
                   <Supertip>
-                    <Title resid="TaskpaneButton.Label"/>
-                    <Description resid="TaskpaneButton.Tooltip"/>
+                    <Title resid="RemoveTagsMenu.Label"/>
+                    <Description resid="RemoveTagsMenu.Tooltip"/>
                   </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.16x16"/>
-                    <bt:Image size="32" resid="Icon.32x32"/>
-                    <bt:Image size="80" resid="Icon.80x80"/>
-                  </Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>ButtonId1</TaskpaneId>
-                    <SourceLocation resid="Taskpane.Url"/>
-                  </Action>
+                  <Items>
+                    <Item id="RemoveTagsMenu.RemoveAll" xsi:type="Button">
+                      <Label resid="RemoveTags.RemoveAll.Label"/>
+                      <Supertip>
+                        <Title resid="RemoveTags.RemoveAll.Label"/>
+                        <Description resid="RemoveTags.RemoveAll.Tooltip"/>
+                      </Supertip>
+                      <Icon>
+                        <bt:Image size="16" resid="Icon.16x16"/>
+                        <bt:Image size="32" resid="Icon.32x32"/>
+                        <bt:Image size="80" resid="Icon.80x80"/>
+                      </Icon>
+                      <Action xsi:type="ExecuteFunction">
+                        <FunctionName>removeTagsFromDocument</FunctionName>
+                      </Action>
+                    </Item>
+                    <Item id="RemoveTagsMenu.RemoveWorksheet" xsi:type="Button">
+                      <Label resid="RemoveTags.RemoveWorksheet.Label"/>
+                      <Supertip>
+                        <Title resid="RemoveTags.RemoveWorksheet.Label"/>
+                        <Description resid="RemoveTags.RemoveWorksheet.Tooltip"/>
+                      </Supertip>
+                      <Icon>
+                        <bt:Image size="16" resid="Icon.16x16"/>
+                        <bt:Image size="32" resid="Icon.32x32"/>
+                        <bt:Image size="80" resid="Icon.80x80"/>
+                      </Icon>
+                      <Action xsi:type="ExecuteFunction">
+                        <FunctionName>removeTagsFromWorksheet</FunctionName>
+                      </Action>
+                    </Item>
+                    <Item id="RemoveTagsMenu.RemoveSelection" xsi:type="Button">
+                      <Label resid="RemoveTags.RemoveSelection.Label"/>
+                      <Supertip>
+                        <Title resid="RemoveTags.RemoveSelection.Label"/>
+                        <Description resid="RemoveTags.RemoveSelection.Tooltip"/>
+                      </Supertip>
+                      <Icon>
+                        <bt:Image size="16" resid="Icon.16x16"/>
+                        <bt:Image size="32" resid="Icon.32x32"/>
+                        <bt:Image size="80" resid="Icon.80x80"/>
+                      </Icon>
+                      <Action xsi:type="ExecuteFunction">
+                        <FunctionName>removeTagsFromSelection</FunctionName>
+                      </Action>
+                    </Item>
+                  </Items>
                 </Control>
               </Group>
             </OfficeTab>
@@ -73,12 +111,18 @@
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!"/>
-        <bt:String id="CommandsGroup.Label" DefaultValue="Commands Group"/>
-        <bt:String id="TaskpaneButton.Label" DefaultValue="Show Task Pane"/>
+        <bt:String id="RemoveTagsGroup.Label" DefaultValue="Tag Tools"/>
+        <bt:String id="RemoveTagsMenu.Label" DefaultValue="Remove tags"/>
+        <bt:String id="RemoveTags.RemoveAll.Label" DefaultValue="Remove all tags"/>
+        <bt:String id="RemoveTags.RemoveWorksheet.Label" DefaultValue="Remove tags from worksheet"/>
+        <bt:String id="RemoveTags.RemoveSelection.Label" DefaultValue="Remove tags from selected range"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded successfully. Go to the HOME tab and click the 'Show Task Pane' button to get started."/>
-        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Click to Show a Taskpane"/>
+        <bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded successfully."/>
+        <bt:String id="RemoveTagsMenu.Tooltip" DefaultValue="Remove HTML tags from your workbook"/>
+        <bt:String id="RemoveTags.RemoveAll.Tooltip" DefaultValue="Remove HTML tags from the entire workbook"/>
+        <bt:String id="RemoveTags.RemoveWorksheet.Tooltip" DefaultValue="Remove HTML tags from the current worksheet"/>
+        <bt:String id="RemoveTags.RemoveSelection.Tooltip" DefaultValue="Remove HTML tags from the selected range"/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>
