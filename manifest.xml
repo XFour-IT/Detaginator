@@ -1,81 +1,85 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
-           xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
-           xsi:type="TaskPaneApp">
-  <Id>12345678-1234-1234-1234-123456789abc</Id>
-  <Version>0.1.0</Version>
-  <ProviderName>Begone-Tags</ProviderName>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
+  <Id>9e59f1a5-e892-4b9e-a089-656c27a3b590</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>Contoso</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="Begone-Tags" />
-  <Description DefaultValue="Strip HTML tags from selected cells." />
+  <DisplayName DefaultValue="Tag Remover"/>
+  <Description DefaultValue="A template to get started."/>
+  <IconUrl DefaultValue="https://localhost:3000/assets/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
+  <SupportUrl DefaultValue="https://www.contoso.com/help"/>
+  <AppDomains>
+    <AppDomain>https://www.contoso.com</AppDomain>
+  </AppDomains>
   <Hosts>
-    <Host Name="Workbook" />
+    <Host Name="Workbook"/>
   </Hosts>
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://localhost:3000/public/taskpane.html" />
+    <SourceLocation DefaultValue="https://localhost:3000/taskpane.html"/>
   </DefaultSettings>
   <Permissions>ReadWriteDocument</Permissions>
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
     <Hosts>
       <Host xsi:type="Workbook">
-        <Runtimes>
-          <Runtime resid="Taskpane.Url" lifetime="long" />
-          <Runtime resid="Commands.Url" lifetime="long" />
-        </Runtimes>
-        <ExtensionPoint xsi:type="PrimaryCommandSurface">
-          <OfficeTab id="TabHome">
-            <Group id="BegoneTagsGroup">
-              <Label resid="BegoneTagsGroup.Label" />
-              <Control xsi:type="Menu" id="RemoveTagsMenu">
-                <Label resid="RemoveTagsMenu.Label" />
-                <Items>
-                  <Item id="RemoveAllTags">
-                    <Label resid="RemoveAllTags.Label" />
-                    <Action xsi:type="ExecuteFunction">
-                      <FunctionName>cleanWorkbook</FunctionName>
-                    </Action>
-                  </Item>
-                  <Item id="RemoveWorksheetTags">
-                    <Label resid="RemoveWorksheetTags.Label" />
-                    <Action xsi:type="ExecuteFunction">
-                      <FunctionName>cleanWorksheet</FunctionName>
-                    </Action>
-                  </Item>
-                  <Item id="RemoveSelectionTags">
-                    <Label resid="RemoveSelectionTags.Label" />
-                    <Action xsi:type="ExecuteFunction">
-                      <FunctionName>cleanSelection</FunctionName>
-                    </Action>
-                  </Item>
-                </Items>
-              </Control>
-              <Control xsi:type="Button" id="AdvancedOptionsButton">
-                <Label resid="AdvancedOptionsButton.Label" />
-                <Action xsi:type="ShowTaskpane">
-                  <TaskpaneId>Taskpane.Read</TaskpaneId>
-                </Action>
-              </Control>
-            </Group>
-          </OfficeTab>
-        </ExtensionPoint>
-        <Taskpane id="Taskpane.Read" resid="Taskpane.Url" />
+        <DesktopFormFactor>
+          <GetStarted>
+            <Title resid="GetStarted.Title"/>
+            <Description resid="GetStarted.Description"/>
+            <LearnMoreUrl resid="GetStarted.LearnMoreUrl"/>
+          </GetStarted>
+          <FunctionFile resid="Commands.Url"/>
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <OfficeTab id="TabHome">
+              <Group id="CommandsGroup">
+                <Label resid="CommandsGroup.Label"/>
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16"/>
+                  <bt:Image size="32" resid="Icon.32x32"/>
+                  <bt:Image size="80" resid="Icon.80x80"/>
+                </Icon>
+                <Control xsi:type="Button" id="TaskpaneButton">
+                  <Label resid="TaskpaneButton.Label"/>
+                  <Supertip>
+                    <Title resid="TaskpaneButton.Label"/>
+                    <Description resid="TaskpaneButton.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16"/>
+                    <bt:Image size="32" resid="Icon.32x32"/>
+                    <bt:Image size="80" resid="Icon.80x80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>ButtonId1</TaskpaneId>
+                    <SourceLocation resid="Taskpane.Url"/>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
       </Host>
     </Hosts>
     <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3000/assets/icon-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3000/assets/icon-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3000/assets/icon-80.png"/>
+      </bt:Images>
       <bt:Urls>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/public/taskpane.html" />
-        <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/public/commands.html" />
+        <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
       </bt:Urls>
       <bt:ShortStrings>
-        <bt:String id="BegoneTagsGroup.Label" DefaultValue="Begone Tags" />
-        <bt:String id="RemoveTagsMenu.Label" DefaultValue="Remove tags" />
-        <bt:String id="RemoveAllTags.Label" DefaultValue="Remove all tags" />
-        <bt:String id="RemoveWorksheetTags.Label" DefaultValue="Remove tags from worksheet" />
-        <bt:String id="RemoveSelectionTags.Label" DefaultValue="Remove tags from selected range" />
-        <bt:String id="AdvancedOptionsButton.Label" DefaultValue="Advanced options" />
+        <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!"/>
+        <bt:String id="CommandsGroup.Label" DefaultValue="Commands Group"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Show Task Pane"/>
       </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded successfully. Go to the HOME tab and click the 'Show Task Pane' button to get started."/>
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Click to Show a Taskpane"/>
+      </bt:LongStrings>
     </Resources>
   </VersionOverrides>
 </OfficeApp>
