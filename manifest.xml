@@ -13,9 +13,9 @@
     <IconUrl DefaultValue="https://begonetabs.z33.web.core.windows.net/assets/icon-32.png" />
     <HighResolutionIconUrl DefaultValue="https://begonetabs.z33.web.core.windows.net/assets/icon-64.png" />
     <SupportUrl
-        DefaultValue="https://learn.microsoft.com/office/dev/add-ins/overview/office-add-in-code-samples" />
+        DefaultValue="https://support.xfour.co.uk" />
     <AppDomains>
-        <AppDomain>https://begonetabs.z33.web.core.windows.net/</AppDomain>
+        <AppDomain>https://begonetabs.z33.web.core.windows.net</AppDomain>
     </AppDomains>
     <Hosts>
         <Host Name="Workbook" />
