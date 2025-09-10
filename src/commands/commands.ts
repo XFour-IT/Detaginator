@@ -134,32 +134,49 @@ async function cleanRange(range: Excel.Range) {
 }
 
 /**
- * Remove HTML tags from a string, keeping text inside <p> tags when present.
+ * Remove HTML tags from a string while keeping a basic representation of the
+ * formatting. Supports common block tags like <p>, <ul>, <ol>, and <li>, as
+ * well as inline formatting tags such as <b>, <strong>, <i>, and <em>.
+ *
+ * Block level tags are converted to newlines and list items are prefixed with
+ * "- ". Inline formatting is removed rather than represented with text
+ * markers so that the result is plain text suitable for Excel.
+ *
  * @param value - the string to clean
- * @returns cleaned string
+ * @returns cleaned string with minimal formatting markers
  */
 export function stripHtml(value: string): string {
-  const paragraphRegex = /<p[^>]*>(.*?)<\/p>/gi;
   const nbspRegex = /&nbsp;/gi;
 
-  const hasParagraph = paragraphRegex.test(value);
-  paragraphRegex.lastIndex = 0;
+  let text = value;
 
-  if (!hasParagraph) {
-    return value.replace(nbspRegex, " ");
-  }
-  const paragraphs: string[] = [];
-  let match: RegExpExecArray | null;
-  while ((match = paragraphRegex.exec(value)) !== null) {
-    paragraphs.push(match[1]);
-  }
-  if (paragraphs.length > 0) {
-    return paragraphs
-      .map((p) => p.replace(/<[^>]+>/g, "").replace(nbspRegex, " "))
-      .join("\n")
-      .trim();
-  }
-  return value.replace(/<[^>]+>/g, "").replace(nbspRegex, " ");
+  // Replace non-breaking spaces early so inner recursive calls don't need to
+  // handle them separately.
+  text = text.replace(nbspRegex, " ");
+
+  // Convert list items to lines prefixed with "- "
+  text = text.replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, (_match, inner) => `\n- ${stripHtml(inner)}`);
+
+  // Remove list containers but keep their content (already handled above).
+  text = text.replace(/<\/?(ul|ol)[^>]*>/gi, "");
+
+  // Convert paragraph and div tags to newlines.
+  text = text.replace(/<\/?(p|div)[^>]*>/gi, "\n");
+
+  // Convert <br> tags to newlines.
+  text = text.replace(/<br\s*\/?\s*>/gi, "\n");
+
+  // Remove any remaining tags.
+  text = text.replace(/<[^>]+>/g, "");
+
+  // Normalize whitespace around newlines and trim the result.
+  text = text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0)
+    .join("\n");
+
+  return text.trim();
 }
 
 if (typeof Office !== "undefined") {
