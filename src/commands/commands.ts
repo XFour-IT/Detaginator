@@ -5,9 +5,11 @@
 
 /* global Excel, Office, console */
 
-Office.onReady(() => {
-  // Office.js is ready.
-});
+if (typeof Office !== "undefined") {
+  Office.onReady(() => {
+    // Office.js is ready.
+  });
+}
 
 /**
  * Remove HTML tags from the selected range.
@@ -136,26 +138,32 @@ async function cleanRange(range: Excel.Range) {
  * @param value - the string to clean
  * @returns cleaned string
  */
-function stripHtml(value: string): string {
-  const regex = /<p[^>]*>(.*?)<\/p>/gi;
+export function stripHtml(value: string): string {
+  const paragraphRegex = /<p[^>]*>(.*?)<\/p>/gi;
+  const nbspRegex = /&nbsp;/gi;
 
-  if (!regex.test(value)) {
-    return value;
+  const hasParagraph = paragraphRegex.test(value);
+  paragraphRegex.lastIndex = 0;
+
+  if (!hasParagraph) {
+    return value.replace(nbspRegex, " ");
   }
   const paragraphs: string[] = [];
   let match: RegExpExecArray | null;
-  while ((match = regex.exec(value)) !== null) {
+  while ((match = paragraphRegex.exec(value)) !== null) {
     paragraphs.push(match[1]);
   }
   if (paragraphs.length > 0) {
     return paragraphs
-      .map((p) => p.replace(/<[^>]+>/g, ""))
+      .map((p) => p.replace(/<[^>]+>/g, "").replace(nbspRegex, " "))
       .join("\n")
       .trim();
   }
-  return value.replace(/<[^>]+>/g, "");
+  return value.replace(/<[^>]+>/g, "").replace(nbspRegex, " ");
 }
 
-Office.actions.associate("removeTagsFromSelection", removeTagsFromSelection);
-Office.actions.associate("removeTagsFromWorksheet", removeTagsFromWorksheet);
-Office.actions.associate("removeTagsFromWorkbook", removeTagsFromWorkbook);
+if (typeof Office !== "undefined") {
+  Office.actions.associate("removeTagsFromSelection", removeTagsFromSelection);
+  Office.actions.associate("removeTagsFromWorksheet", removeTagsFromWorksheet);
+  Office.actions.associate("removeTagsFromWorkbook", removeTagsFromWorkbook);
+}
