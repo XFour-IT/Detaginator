@@ -119,7 +119,7 @@
             </bt:Images>
             <bt:Urls>
                 <bt:Url id="GetStarted.LearnMoreUrl"
-                    DefaultValue="http://go.microsoft.com/fwlink/?LinkId=276812" />
+                    DefaultValue="https://xfour.atlassian.net/servicedesk/customer/kb/view/17530882?source=shareable-url" />
                 <bt:Url id="Taskpane.Url" DefaultValue="https://begonetabs.z33.web.core.windows.net/taskpane.html" />
                 <bt:Url id="Commands.Url" DefaultValue="https://begonetabs.z33.web.core.windows.net/commands.html" />
             </bt:Urls>
