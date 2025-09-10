@@ -1,4 +1,7 @@
+
 # Begone-Tags
+
+[![CI](https://github.com/XFour-IT/Begone-Tags/actions/workflows/ci.yml/badge.svg)](https://github.com/XFour-IT/Begone-Tags/actions/workflows/ci.yml)
 
 Begone-Tags is an Excel add-in that strips HTML tags from selected cells in a workbook.
 
