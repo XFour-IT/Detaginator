@@ -8,7 +8,7 @@
     <Version>1.0.0.0</Version>
     <ProviderName>XFour IT Limited</ProviderName>
     <DefaultLocale>en-GB</DefaultLocale>
-    <DisplayName DefaultValue="Begone Tags" />
+    <DisplayName DefaultValue="Detaginator" />
     <Description DefaultValue="This add-in parses and sanitises a document removing any HTML tags and leaving behind the content inside paragraph tags." />
     <IconUrl DefaultValue="https://begonetabs.z33.web.core.windows.net/assets/icon-32.png" />
     <HighResolutionIconUrl DefaultValue="https://begonetabs.z33.web.core.windows.net/assets/icon-64.png" />
@@ -124,9 +124,9 @@
                 <bt:Url id="Commands.Url" DefaultValue="https://begonetabs.z33.web.core.windows.net/commands.html" />
             </bt:Urls>
             <bt:ShortStrings>
-                <bt:String id="GetStarted.Title" DefaultValue="Get started with Tag Remover" />
-                <bt:String id="RemoveTagsGroup.Label" DefaultValue="Tag Remover" />
-                <bt:String id="RemoveTagsMenu.Label" DefaultValue="Remove Tags" />
+                <bt:String id="GetStarted.Title" DefaultValue="Get started with the Detaginator 3000" />
+                <bt:String id="RemoveTagsGroup.Label" DefaultValue="Detaginator 3000" />
+                <bt:String id="RemoveTagsMenu.Label" DefaultValue="Detaginator" />
                 <bt:String id="RemoveTags.RemoveAll.Label" DefaultValue="Remove All Tags" />
                 <bt:String id="RemoveTags.FromWorksheet.Label" DefaultValue="...from Worksheet" />
                 <bt:String id="RemoveTags.FromSelection.Label" DefaultValue="...from Selection" />
