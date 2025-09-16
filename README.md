@@ -1,9 +1,9 @@
 
-# Begone-Tags
+# Detaginator 3000
 
 [![CI](https://github.com/XFour-IT/Begone-Tags/actions/workflows/ci.yml/badge.svg)](https://github.com/XFour-IT/Begone-Tags/actions/workflows/ci.yml)
 
-Begone-Tags is an Excel add-in that strips HTML tags from selected cells in a workbook.
+The Detaginator 3000 is an Excel add-in that strips HTML tags from selected cells in a workbook.
 
 ## Development
 
