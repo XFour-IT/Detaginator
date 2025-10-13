@@ -32,4 +32,10 @@ describe("stripHtml", () => {
     const expected = "Hello World";
     assert.equal(stripHtml(input), expected);
   });
+
+  it("decodes common HTML entities", () => {
+    const input = "&lt;div&gt;Fish &amp; Chips&#39;&lt;/div&gt;";
+    const expected = "<div>Fish & Chips'</div>";
+    assert.equal(stripHtml(input), expected);
+  });
 });

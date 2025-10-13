@@ -145,6 +145,34 @@ async function cleanRange(range: Excel.Range) {
  * @param value - the string to clean
  * @returns cleaned string with minimal formatting markers
  */
+const htmlEntityMap: Record<string, string> = {
+  "&lt;": "<",
+  "&gt;": ">",
+  "&amp;": "&",
+  "&quot;": "\"",
+  "&apos;": "'",
+  "&#39;": "'",
+};
+
+function decodeHtmlEntities(text: string): string {
+  let decoded = text.replace(/&(lt|gt|amp|quot|apos|#39);/gi, (entity) => {
+    const lower = entity.toLowerCase();
+    return htmlEntityMap[lower] ?? entity;
+  });
+
+  decoded = decoded.replace(/&#(\d+);/g, (_match, code) => {
+    const charCode = Number.parseInt(code, 10);
+    return Number.isNaN(charCode) ? _match : String.fromCharCode(charCode);
+  });
+
+  decoded = decoded.replace(/&#x([0-9a-f]+);/gi, (_match, code) => {
+    const charCode = Number.parseInt(code, 16);
+    return Number.isNaN(charCode) ? _match : String.fromCharCode(charCode);
+  });
+
+  return decoded;
+}
+
 export function stripHtml(value: string): string {
   const nbspRegex = /&nbsp;/gi;
 
@@ -168,6 +196,9 @@ export function stripHtml(value: string): string {
 
   // Remove any remaining tags.
   text = text.replace(/<[^>]+>/g, "");
+
+  // Decode HTML entities to their literal counterparts.
+  text = decodeHtmlEntities(text);
 
   // Normalize whitespace around newlines and trim the result.
   text = text
