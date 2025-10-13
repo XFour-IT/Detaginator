@@ -149,7 +149,7 @@ const htmlEntityMap: Record<string, string> = {
   "&lt;": "<",
   "&gt;": ">",
   "&amp;": "&",
-  "&quot;": "\"",
+  "&quot;": '"',
   "&apos;": "'",
   "&#39;": "'",
 };
