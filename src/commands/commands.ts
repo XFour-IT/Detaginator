@@ -12,8 +12,20 @@ if (typeof Office !== "undefined") {
 }
 
 /**
- * Remove HTML tags from the selected range.
- * @param event - the event object provided by the Office runtime
+ * Remove HTML tags from the currently selected range in Excel.
+ *
+ * This command handler is intended to be associated with an Office Add-in
+ * command (for example, a ribbon button). It obtains the currently
+ * selected range and strips HTML from every cell inside the range.
+ *
+ * @param event - The add-in command event supplied by the Office runtime.
+ *   The handler must call `event.completed()` when finished to let the
+ *   runtime know the action has completed.
+ *
+ * @returns A promise that resolves when the operation has finished. The
+ *   Office runtime is notified of completion via `event.completed()` in
+ *   the finally block so callers do not need to await the returned
+ *   promise for runtime bookkeeping.
  */
 async function removeTagsFromSelection(event: Office.AddinCommands.Event) {
   try {
@@ -29,8 +41,14 @@ async function removeTagsFromSelection(event: Office.AddinCommands.Event) {
 }
 
 /**
- * Remove HTML tags from the active worksheet.
- * @param event - the event object provided by the Office runtime
+ * Remove HTML tags from every used cell in the active worksheet.
+ *
+ * This command handler finds the active worksheet's used range and, if it
+ * exists, strips HTML tags from each cell in that range.
+ *
+ * @param event - The add-in command event supplied by the Office runtime.
+ *   Must be completed by calling `event.completed()` when the handler is
+ *   finished.
  */
 async function removeTagsFromWorksheet(event: Office.AddinCommands.Event) {
   try {
@@ -50,8 +68,16 @@ async function removeTagsFromWorksheet(event: Office.AddinCommands.Event) {
 }
 
 /**
- * Remove HTML tags from all worksheets in the workbook.
- * @param event - the event object provided by the Office runtime
+ * Remove HTML tags from every used cell across all worksheets in the
+ * current workbook.
+ *
+ * The handler enumerates all worksheets, collects their used ranges, and
+ * then strips HTML from the cells in each non-empty range. This is
+ * executed as a single logical operation from the user's perspective
+ * (triggered by an add-in command).
+ *
+ * @param event - The add-in command event supplied by the Office runtime.
+ *   `event.completed()` will be invoked once processing is finished.
  */
 async function removeTagsFromWorkbook(event: Office.AddinCommands.Event) {
   try {
@@ -110,9 +136,19 @@ async function removeTagsFromWorkbook(event: Office.AddinCommands.Event) {
 // }
 
 /**
- * Cleans all cells within a range by stripping HTML tags and keeping text within
- * paragraph tags.
- * @param range - the Excel range to clean
+ * Remove HTML markup from every string cell inside the provided range.
+ *
+ * Non-string cell values (numbers, booleans, errors, etc.) are left
+ * untouched. The function reads the range values, applies `stripHtml` to
+ * any string cells, writes the possibly-updated values back to the range,
+ * and synchronizes the context.
+ *
+ * @param range - The Excel range whose cell values should be cleaned.
+ *
+ * @remarks
+ * This function relies on the Excel JavaScript API's batching model and
+ * therefore must be called from within an `Excel.run` callback or when a
+ * valid context is available on the range.
  */
 async function cleanRange(range: Excel.Range) {
   range.load("values");
@@ -134,16 +170,13 @@ async function cleanRange(range: Excel.Range) {
 }
 
 /**
- * Remove HTML tags from a string while keeping a basic representation of the
- * formatting. Supports common block tags like <p>, <ul>, <ol>, and <li>, as
- * well as inline formatting tags such as <b>, <strong>, <i>, and <em>.
+ * A small mapping of commonly-encoded HTML entities to their literal
+ * character equivalents.
  *
- * Block level tags are converted to newlines and list items are prefixed with
- * "- ". Inline formatting is removed rather than represented with text
- * markers so that the result is plain text suitable for Excel.
+ * Keys are lower-cased to simplify lookup when decoding case-insensitive
+ * entity names (the decoder normalizes matches to lower-case before lookup).
  *
- * @param value - the string to clean
- * @returns cleaned string with minimal formatting markers
+ * @internal
  */
 const htmlEntityMap: Record<string, string> = {
   "&lt;": "<",
@@ -154,6 +187,16 @@ const htmlEntityMap: Record<string, string> = {
   "&#39;": "'",
 };
 
+/**
+ * Decode HTML character entities in a string.
+ *
+ * This function handles named entities included in `htmlEntityMap` as well
+ * as numeric character references (decimal and hexadecimal forms).
+ *
+ * @param text - The text potentially containing HTML entities.
+ * @returns The text with entities replaced by their corresponding
+ *   characters. Unknown or malformed entities are left untouched.
+ */
 function decodeHtmlEntities(text: string): string {
   let decoded = text.replace(/&(lt|gt|amp|quot|apos|#39);/gi, (entity) => {
     const lower = entity.toLowerCase();
@@ -173,6 +216,26 @@ function decodeHtmlEntities(text: string): string {
   return decoded;
 }
 
+/**
+ * Strip HTML markup from a string while preserving a minimal readable
+ * representation of block structure.
+ *
+ * Behavior summary:
+ * - <li> items become lines prefixed with "- ".
+ * - <ul> and <ol> containers are removed (their items are already handled).
+ * - <p>, <div>, and <br> become newlines.
+ * - Remaining tags (including inline formatting like <b>/<i>) are removed.
+ * - Common HTML entities (named and numeric) are decoded into characters.
+ * - Leading/trailing whitespace for each line is trimmed and empty lines are
+ *   removed.
+ *
+ * This function is safe for use on user-visible text cells and produces
+ * plain text suitable for Excel cells.
+ *
+ * @param value - The input string that may contain HTML markup.
+ * @returns A cleaned string with HTML removed and simple list/paragraph
+ *   structure retained as newlines and dashes.
+ */
 export function stripHtml(value: string): string {
   const nbspRegex = /&nbsp;/gi;
 
